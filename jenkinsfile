@@ -1,5 +1,9 @@
 pipeline {
   agent any
+  environment {
+    JAVA_HOME = '/usr/java/jdk1.8.0_171-amd64/'
+    PATH      = 'JAVA_HOME:$HOME/bin:/root/apache-maven-3.5.3/bin:$PATH'
+  }
   stages {
     stage('Build') {
       steps {
@@ -15,11 +19,13 @@ pipeline {
         }
       }
     }
+
     stage('Test') {
       steps {
         echo 'Testing'
       }
     }
+
     stage('Deploy') {
       steps {
         echo 'Deploying'
