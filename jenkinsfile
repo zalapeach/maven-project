@@ -1,10 +1,12 @@
 pipeline {
   agent any
+
   tools {
     maven 'Maven'
     jdk 'localJDK'
   }
   stages {
+
     stage('Build') {
       steps {
         sh 'mvn clean package'
@@ -23,12 +25,31 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Testing'
+        build job: 'static-analysis'
       }
     }
 
-    stage('Deploy') {
+    stage('Deploy to staging') {
       steps {
-        echo 'Deploying'
+        echo 'Deploying to stating'
+        build job: 'deploy-to-staging'
+      }
+    }
+    
+    stage('Deploy to production') {
+      steps {
+        timeout(time: 5, unit: 'DAYS') {
+          input message: 'Approve PRODUCTION DEPLOYMENT?'
+        }
+        build job: 'deploy-to-production
+      }
+      post {
+        success {
+          echo 'Code deployed to production'
+        }
+        failure {
+          echo 'Deployment failed, please check logs for details'
+        }
       }
     }
   }
