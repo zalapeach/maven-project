@@ -38,7 +38,7 @@ pipeline {
 
         stage ('Deploy to production') {
           steps {
-            sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war root@${params.production}:/root/apache-tomcat-8.5.31-production/webapps"
+            sh "scp -i /home/jenkins/tomcat-demo.pem /var/lib/jenkins/jobs/pipeline-fully-automated/workspace/webapp/target/*.war root@${params.production}:/root/apache-tomcat-8.5.31-production/webapps"
           }
         }
       }
