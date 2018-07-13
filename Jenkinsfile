@@ -32,7 +32,7 @@ pipeline {
       parallel {
         stage('Deploy to staging') {
           steps {
-            sh "scp -i /home/jenkins/tomcat-demo.pem **/target/*.war root@${params.staging}:/root/apache-tomcat-8.5.31-staging/webapps"
+            sh "scp -i **/target/*.war root@${params.staging}:/root/apache-tomcat-8.5.31-staging/webapps"
           }
         }
 
