@@ -33,14 +33,14 @@ pipeline {
         stage('Deploy to staging') {
           steps {
             sh 'whoami'
-            sh "scp /var/lib/jenkins/jobs/pipeline-fully-automated/workspace/webapp/target/*.war root@${params.staging}:/root/apache-tomcat-8.5.31-staging/webapps"
+            sh "scp **/target/*.war root@${params.staging}:/root/apache-tomcat-8.5.31-staging/webapps"
           }
         }
 
         stage ('Deploy to production') {
           steps {
             sh 'whoami'
-            sh "scp /var/lib/jenkins/jobs/pipeline-fully-automated/workspace/webapp/target/*.war root@${params.production}:/root/apache-tomcat-8.5.31-production/webapps"
+            sh "scp **/target/*.war root@${params.production}:/root/apache-tomcat-8.5.31-production/webapps"
           }
         }
       }
